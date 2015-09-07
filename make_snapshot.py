@@ -20,9 +20,8 @@ image = cs.servers.create_image(server.id, server.name)
 
 while True:
     image = img.list(name=server.name)[0]
-    pprint(image)
     if image.status == 'active':
         print("Image active!")
         break
     print("Image not active yet...")
-    time.sleep(5)
+    time.sleep(60)
