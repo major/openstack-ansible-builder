@@ -5,7 +5,7 @@
   vars:
     pyrax_credentials: .pyrax
     server_basename: openstack-ansible
-    git_sha: 0123456789abcdef
+    git_sha: "{{ lookup('env','OSAD_SHA') }}"
   tasks:
 
     - name: Build a new cloud server
