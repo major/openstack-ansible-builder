@@ -56,3 +56,11 @@
         path: /var/log/cloud-init-output.log
         search_regex: "OSAD-DEPLOYMENT-COMPLETE"
         timeout: 7200
+
+    - name: Power off server
+      command: shutdown -h now
+      ignore_errors: true
+
+    - name: Wait 60 seconds for server to power off
+      wait_for:
+        timeout: 60
