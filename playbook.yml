@@ -38,14 +38,8 @@
   gather_facts: false
   tasks:
 
-    - name: Wait about 30 seconds for the server to be available
-      wait_for:
-        timeout=30
-
     - name: Wait for server to come online
-      wait_for: >
-        port=22
-        timeout=300
+      local_action: wait_for port=22 timeout=300 host={{inventory_hostname}}
 
 - name: Finish
   hosts: raxhosts
