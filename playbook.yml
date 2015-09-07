@@ -32,14 +32,14 @@
           groupname: raxhosts
       with_items: rax.instances
 
-- name: Wait for server to come online
-  hosts: raxhosts
-  user: root
-  gather_facts: false
-  tasks:
-
     - name: Wait for server to come online
-      local_action: wait_for port=22 timeout=300 host={{inventory_hostname}}
+      wait_for:
+        host: "{{ item.accessIPv4 }}"
+        port: 22
+        delay: 60
+        timeout: 500
+        state: started
+      with_items: rax.instances
 
 - name: Finish
   hosts: raxhosts
