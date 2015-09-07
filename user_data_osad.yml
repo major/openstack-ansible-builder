@@ -1,0 +1,14 @@
+#cloud-config
+apt_mirror: http://iad.mirror.rackspace.com/ubuntu/
+package_upgrade: true
+packages:
+  - git-core
+  - screen
+  - tmux
+runcmd:
+  - git clone https://github.com/stackforge/os-ansible-deployment.git /opt/os-ansible-deployment
+  - cd /opt/os-ansible-deployment && scripts/bootstrap-aio.sh
+  - cd /opt/os-ansible-deployment && scripts/bootstrap-ansible.sh
+  - cd /opt/os-ansible-deployment && time scripts/run-playbooks.sh
+  - echo "OSAD-DEPLOYMENT-COMPLETE"
+output: { all: '| tee -a /var/log/cloud-init-output.log' }

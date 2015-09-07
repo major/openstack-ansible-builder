@@ -1,0 +1,60 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    pyrax_credentials: .pyrax
+    server_basename: openstack-ansible
+    git_sha: 0123456789abcdef
+  tasks:
+
+    - name: Build a new cloud server
+      action:
+        module: rax
+        credentials: "{{ pyrax_credentials }}"
+        name: "{{ server_basename }}-{{ git_sha }}"
+        flavor: general1-8
+        image: 09de0a66-3156-48b4-90a5-1cf25a905207
+        key_name: jenkins_mhtx_net
+        wait: yes
+        region: IAD
+        state: present
+        group: "{{ server_basename }}-{{ git_sha }}"
+        networks:
+          - public
+        user_data: user_data_osad.yml
+      register: rax
+
+    - name: Add new instance to host group
+      local_action:
+          module: add_host
+          hostname: "{{ item.accessIPv4 }}"
+          groupname: raxhosts
+      with_items: rax.instances
+
+- name: Wait for server to come online
+  hosts: raxhosts
+  user: root
+  gather_facts: false
+  tasks:
+
+    - name: Wait for server to come online
+      wait_for: >
+        port=22
+        timeout=300
+
+- name: Finish
+  hosts: raxhosts
+  user: root
+  tasks:
+
+    - name: Set common root password
+      user:
+        name: root
+        password: osad-deployment
+
+    - name: Wait for OSAD deploy to finish (max 2 hours)
+      wait_for:
+        path: /var/log/cloud-init-output.log
+        search_regex: "OSAD-DEPLOYMENT-COMPLETE"
+        timeout: 7200
