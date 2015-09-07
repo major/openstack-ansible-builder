@@ -3,7 +3,7 @@
   connection: local
   gather_facts: False
   vars:
-    pyrax_credentials: .pyrax
+    pyrax_credentials: ~/.pyrax
     server_basename: openstack-ansible
     git_sha: "{{ lookup('env','OSAD_SHA') }}"
   tasks:
