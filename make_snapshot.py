@@ -8,6 +8,8 @@ from pprint import pprint
 commit = os.environ['OSAD_SHA']
 instance_name = "openstack-ansible-{0}".format(commit)
 
+print("Looking for an instance named: {0}".format(instance_name))
+
 pyrax.set_setting("identity_type", "rackspace")
 creds_file = os.path.expanduser("~/.pyrax")
 pyrax.set_credential_file(creds_file)
