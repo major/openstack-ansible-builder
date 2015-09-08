@@ -64,3 +64,4 @@
     - name: Wait 60 seconds for server to power off
       wait_for:
         timeout: 60
+      ignore_errors: true
