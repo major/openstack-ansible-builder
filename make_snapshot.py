@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+from datetime import datetime
 import os
 import pyrax
+import sys
 import time
 
 from pprint import pprint
@@ -17,13 +19,18 @@ cs = pyrax.connect_to_cloudservers(region='IAD')
 img = pyrax.connect_to_images(region='IAD')
 
 print("Requesting a snapshot...")
-server = next(x for x in cs.servers.list() if x.name == instance_name)
-image = cs.servers.create_image(server.id, server.name)
+listing = [x for x in cs.servers.list() if x.name == instance_name]
+server = listing[0]
+try:
+    image = cs.servers.create_image(server.id, server.name)
+except Exception as e:
+    print("Looks like the image has already started -- monitoring it...")
 
 while True:
     image = img.list(name=server.name)[0]
+    datestring = datetime.now().isoformat(' ')
     if image.status == 'active':
-        print("Image active!")
+        print("{0} - Image active!".format(datestring))
         break
-    print("Image not active yet...")
+    print("{0} - Image not active yet...".format(datestring))
     time.sleep(60)
