@@ -6,9 +6,9 @@ packages:
   - screen
   - tmux
 runcmd:
-  - git clone https://github.com/stackforge/os-ansible-deployment.git /opt/os-ansible-deployment
-  - cd /opt/os-ansible-deployment && scripts/bootstrap-aio.sh
-  - cd /opt/os-ansible-deployment && scripts/bootstrap-ansible.sh
-  - cd /opt/os-ansible-deployment && time scripts/run-playbooks.sh
+  - git clone https://github.com/openstack/openstack-ansible.git /opt/openstack-ansible
+  - cd /opt/openstack-ansible && scripts/bootstrap-aio.sh
+  - cd /opt/openstack-ansible && scripts/bootstrap-ansible.sh
+  - cd /opt/openstack-ansible && time scripts/run-playbooks.sh
   - echo "OSAD-DEPLOYMENT-COMPLETE"
 output: { all: '| tee -a /var/log/cloud-init-output.log' }
