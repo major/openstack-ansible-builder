@@ -46,10 +46,14 @@
   user: root
   tasks:
 
-    - name: Set common root password
-      user:
-        name: root
-        password: osad-deployment
+    - name: Add personal ssh key
+      authorized_key:
+        user: root
+        key: "{{ item }}"
+        state: present
+        exclusive: no
+      with_file:
+        - personal_servers.pub
 
     - name: Wait for OSAD deploy to finish (max 2 hours)
       wait_for:
@@ -57,6 +61,6 @@
         search_regex: "OSAD-DEPLOYMENT-COMPLETE"
         timeout: 7200
 
-    - name: Power off server
-      command: shutdown -h now
-      ignore_errors: true
+    # - name: Power off server
+    #   command: shutdown -h now
+    #   ignore_errors: true
