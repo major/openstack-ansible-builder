@@ -6,6 +6,8 @@ packages:
   - screen
   - tmux
 runcmd:
+  - export ANSIBLE_FORCE_COLOR=true
+  - export PYTHONUNBUFFERED=1
   - git clone https://github.com/openstack/openstack-ansible.git /opt/openstack-ansible
   - cd /opt/openstack-ansible && scripts/bootstrap-aio.sh
   - cd /opt/openstack-ansible && scripts/bootstrap-ansible.sh
