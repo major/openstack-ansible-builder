@@ -13,7 +13,7 @@
         module: rax
         credentials: "{{ pyrax_credentials }}"
         name: "{{ server_basename }}-{{ git_sha }}"
-        flavor: general1-8
+        flavor: compute1-15
         image: 09de0a66-3156-48b4-90a5-1cf25a905207
         key_name: jenkins_mhtx_net
         wait: yes
