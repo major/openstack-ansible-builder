@@ -20,6 +20,8 @@
         region: IAD
         state: present
         group: "{{ server_basename }}-{{ git_sha }}"
+        boot_from_volume: yes
+        boot_volume_size: 200
         networks:
           - public
         user_data: user_data_osad.yml
