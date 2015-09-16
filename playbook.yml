@@ -22,6 +22,7 @@
         group: "{{ server_basename }}-{{ git_sha }}"
         boot_from_volume: yes
         boot_volume_size: 200
+        boot_volume_terminate: yes
         networks:
           - public
         user_data: user_data_osad.yml
