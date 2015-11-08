@@ -25,7 +25,7 @@
         # boot_volume_terminate: yes
         networks:
           - public
-          - servicenet
+          - private
         user_data: user_data_osad.yml
       register: rax
 
