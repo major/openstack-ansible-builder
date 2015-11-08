@@ -19,7 +19,7 @@
         wait: yes
         region: IAD
         state: present
-        group: "{{ server_basename }}-{{ git_sha | truncate(8, True, '') }}"
+        group: "{{ server_basename }}-{{ git_sha[8:] }}"
         # boot_from_volume: yes
         # boot_volume_size: 200
         # boot_volume_terminate: yes
